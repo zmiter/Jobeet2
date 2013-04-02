@@ -1,4 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends 'JobeetJobBoardBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('bundles/jobeetjobboard/css/jobs.css') }}" />
+{% endblock %}
 
 {% block body -%}
     <h1>Job list</h1>
