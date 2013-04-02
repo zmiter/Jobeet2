@@ -1,0 +1,5 @@
+jobeet_job_board:
+    resource: "@JobeetJobBoardBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
