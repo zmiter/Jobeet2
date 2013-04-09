@@ -5,7 +5,10 @@ namespace Jobeet\JobBoardBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-/** @ORM\Entity */
+/**
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ */
 class Job
 {
     /**
@@ -408,6 +411,19 @@ class Job
     public function getExpiresAt()
     {
         return $this->expiresAt;
+    }
+
+    /**
+     * Set expiresAt default value
+     *
+     * @ORM\PrePersist
+     */
+    public function setDefaultExpiresAt()
+    {
+        if (!$this->getExpiresAt()) {
+            $now = $this->getCreatedAt() ? clone $this->getCreatedAt() : new \DateTime();
+            $this->setExpiresAt($now->modify('+30 days'));
+        }
     }
 
     /**
