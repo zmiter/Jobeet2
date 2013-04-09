@@ -59,6 +59,22 @@ EOT
         $objectManager->persist($job);
         $this->addReference('job-extreme-sensio', $job);
 
+        // Create an expired job object
+        $job = new Job();
+        $job->setCategory($this->getReference('category-programming'));
+        $job->setCompany('Sensio Labs');
+        $job->setPosition('Web Developer Expired');
+        $job->setLocation('Paris, France');
+        $job->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
+        $job->setHowToApply('Send your resume to lorem.ipsum [at] dolor.sit');
+        $job->setIsPublic(true);
+        $job->setIsActivated(true);
+        $job->setToken('job_expired');
+        $job->setEmail('job@example.com');
+        $job->setCreatedAt(new \DateTime('2005-12-01'));
+        $objectManager->persist($job);
+        $this->addReference('job-expired', $job);
+
         // Only flush() ever causes write operations against the database.
         // Other methods such as persist() only notify the UnitOfWork to perform these operations during flush.
         $objectManager->flush();
