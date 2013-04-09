@@ -16,6 +16,12 @@ class Job
     private $id;
 
     /**
+     * @ORM\Column(unique=true)
+     * @Gedmo\Slug(fields={"company", "location", "position"})
+     */
+    private $slug;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="jobs")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
@@ -80,6 +86,29 @@ class Job
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Job
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
