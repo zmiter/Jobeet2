@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Jobeet\JobBoardBundle\Entity\Job;
 use Jobeet\JobBoardBundle\Entity\Category;
 use Jobeet\JobBoardBundle\Form\JobType;
@@ -104,6 +105,7 @@ class JobController extends Controller
      * @Route("/{slug}", name="job_show")
      * @Method("GET")
      * @Template()
+     * @ParamConverter(class="JobeetJobBoardBundle:Job", options={"repository_method" = "retrieveActiveJob"})
      */
     public function showAction(Job $job)
     {

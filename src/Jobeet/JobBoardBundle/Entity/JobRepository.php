@@ -31,4 +31,13 @@ class JobRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function retrieveActiveJob($criteria)
+    {
+        return $this->getActiveJobsQueryBuilder()
+            ->andWhere('j.slug = :slug')
+            ->setParameter('slug', $criteria['slug'])
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
