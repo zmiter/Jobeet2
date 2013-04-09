@@ -15,6 +15,12 @@ class Category
      */
     private $id;
 
+    /**
+     * @ORM\Column(unique=true)
+     * @Gedmo\Slug(fields={"name"})
+     */
+    private $slug;
+
     /** @ORM\Column(unique=true) */
     private $name;
 
@@ -53,6 +59,29 @@ class Category
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

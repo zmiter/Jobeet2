@@ -19,22 +19,14 @@ class CategoryController extends Controller
     /**
      * Finds and displays a Category entity.
      *
-     * @Route("/{id}", name="category_show")
+     * @Route("/{slug}", name="category_show")
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction(Category $category)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JobeetJobBoardBundle:Category')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
-        }
-
         return array(
-            'entity'      => $entity,
+            'entity' => $category,
         );
     }
 }
