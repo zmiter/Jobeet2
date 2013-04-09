@@ -84,6 +84,22 @@ EOT
         $objectManager->persist($job);
         $this->addReference('job-expired', $job);
 
+        // Bunch of jobs
+        for ($i = 100; $i <= 130; $i++) {
+            $job = $this->container->get('jobeet_job_board.job_factory')->get();
+            $job->setCategory($this->getReference('category-programming'));
+            $job->setCompany('Company '.$i);
+            $job->setPosition('Web Developer');
+            $job->setLocation('Paris, France');
+            $job->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
+            $job->setHowToApply('Send your resume to lorem.ipsum [at] dolor.sit');
+            $job->setIsPublic(true);
+            $job->setIsActivated(true);
+            $job->setToken('job_'.$i);
+            $job->setEmail('job@example.com');
+            $objectManager->persist($job);
+        }
+
         // Only flush() ever causes write operations against the database.
         // Other methods such as persist() only notify the UnitOfWork to perform these operations during flush.
         $objectManager->flush();
