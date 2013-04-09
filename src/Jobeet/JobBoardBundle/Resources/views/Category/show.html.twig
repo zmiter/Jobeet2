@@ -15,5 +15,7 @@
       <h1>{{ category.name }}</h1>
     </div>
 
-    {{ include('JobeetJobBoardBundle:Job:list.html.twig', { 'jobs': jobs }) }}
+    {{ include('JobeetJobBoardBundle:Job:list.html.twig', { 'jobs': pagination }) }}
+
+    {{ knp_pagination_render(pagination, 'JobeetJobBoardBundle:Category:pagination.html.twig') }}
 {% endblock %}

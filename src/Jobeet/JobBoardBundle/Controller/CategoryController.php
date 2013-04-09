@@ -23,15 +23,19 @@ class CategoryController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction(Category $category)
+    public function showAction(Request $request, Category $category)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->getActiveJobsByCategory($category);
+        $pagination = $this->get('knp_paginator')->paginate(
+            $em->getRepository('JobeetJobBoardBundle:Job')->getActiveJobsByCategoryQueryBuilder($category),
+            $request->query->get('page', 1),
+            $this->container->getParameter('jobeet_job_board.max_jobs_on_category')
+        );
 
         return array(
             'category' => $category,
-            'jobs' => $jobs
+            'pagination' => $pagination
         );
     }
 }
