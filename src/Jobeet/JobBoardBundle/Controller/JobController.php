@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Jobeet\JobBoardBundle\Entity\Job;
+use Jobeet\JobBoardBundle\Entity\Category;
 use Jobeet\JobBoardBundle\Form\JobType;
 
 /**
@@ -28,10 +29,26 @@ class JobController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->getActiveJobs();
+        $categories = $em->getRepository('JobeetJobBoardBundle:Category')->getWithJobs();
 
         return array(
-            'jobs' => $jobs,
+            'categories' => $categories,
+        );
+    }
+
+    /**
+     * Lists all Job entities by category.
+     *
+     * @Template()
+     */
+    public function listByCategoryAction(Category $category)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->getActiveJobsByCategory($category);
+
+        return array(
+            'jobs' => $jobs
         );
     }
 

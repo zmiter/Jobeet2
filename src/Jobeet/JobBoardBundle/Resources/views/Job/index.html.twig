@@ -7,18 +7,17 @@
 
 {% block body -%}
     <div id="jobs">
-      <table class="jobs">
-        {% for job in jobs %}
-          <tr class="{{ cycle(['even', 'odd'], loop.index) }}">
-            <td class="location">{{ job.location }}</td>
-            <td class="position">
-              <a href="{{ path('job_show', { 'slug': job.slug }) }}">
-                {{ job.position }}
-              </a>
-            </td>
-            <td class="company">{{ job.company }}</td>
-          </tr>
-        {% endfor %}
-      </table>
+      {% for category in categories %}
+        <div class="category_jobs">
+          <div class="category">
+            <div class="feed">
+              <a href="">Feed</a>
+            </div>
+            <h1>{{ category.name }}</h1>
+          </div>
+
+          {{ render(controller('JobeetJobBoardBundle:Job:listByCategory', { 'category': category })) }}
+        </div>
+      {% endfor %}
     </div>
 {% endblock %}
