@@ -87,16 +87,8 @@ class JobController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function showAction($slug)
+    public function showAction(Job $job)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $job = $em->getRepository('JobeetJobBoardBundle:Job')->findOneBySlug($slug);
-
-        if (!$job) {
-            throw $this->createNotFoundException('Unable to find job.');
-        }
-
         return array(
             'job' => $job
         );
