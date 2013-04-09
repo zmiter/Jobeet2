@@ -45,7 +45,8 @@ class JobController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->getActiveJobsByCategory($category);
+        $maxJobsOnHomepage = $this->container->getParameter('jobeet_job_board.max_jobs_on_homepage');
+        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->getActiveJobsByCategory($category, $maxJobsOnHomepage);
 
         return array(
             'jobs' => $jobs

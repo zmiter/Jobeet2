@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="jobeet_job_board.active_days">30</parameter>
+        <parameter key="jobeet_job_board.max_jobs_on_homepage">10</parameter>
     </parameters>
 
     <services>
