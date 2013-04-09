@@ -1,5 +1,7 @@
 {% extends 'JobeetJobBoardBundle::layout.html.twig' %}
 
+{% block title %}{{ job.company }} is looking for a {{ job.position }}{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('bundles/jobeetjobboard/css/job.css') }}" />
