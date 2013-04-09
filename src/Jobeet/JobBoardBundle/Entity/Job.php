@@ -4,6 +4,7 @@ namespace Jobeet\JobBoardBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Jobeet\JobBoardBundle\Entity\JobRepository")
@@ -63,7 +64,10 @@ class Job
     /** @ORM\Column(type="boolean") */
     private $isActivated = false;
 
-    /** @ORM\Column */
+    /**
+     * @ORM\Column
+     * @Assert\Email
+     */
     private $email;
 
     /** @ORM\Column(type="datetime") */
