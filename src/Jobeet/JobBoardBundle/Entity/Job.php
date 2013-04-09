@@ -31,7 +31,10 @@ class Job
      */
     private $category;
 
-    /** @ORM\Column(nullable=true) */
+    /**
+     * @ORM\Column(nullable=true)
+     * @Assert\Choice(choices={"full-time", "part-time", "freelance"})
+     */
     private $type;
 
     /** @ORM\Column */
