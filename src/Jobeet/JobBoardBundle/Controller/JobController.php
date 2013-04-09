@@ -28,10 +28,10 @@ class JobController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('JobeetJobBoardBundle:Job')->findAll();
+        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->findAll();
 
         return array(
-            'entities' => $entities,
+            'jobs' => $jobs,
         );
     }
 

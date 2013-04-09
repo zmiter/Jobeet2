@@ -6,69 +6,19 @@
 {% endblock %}
 
 {% block body -%}
-    <h1>Job list</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-                <th>Company</th>
-                <th>Logopath</th>
-                <th>Url</th>
-                <th>Position</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th>Howtoapply</th>
-                <th>Token</th>
-                <th>Ispublic</th>
-                <th>Isactivated</th>
-                <th>Email</th>
-                <th>Expiresat</th>
-                <th>Createdat</th>
-                <th>Updatedat</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('job_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.type }}</td>
-                <td>{{ entity.company }}</td>
-                <td>{{ entity.logoPath }}</td>
-                <td>{{ entity.url }}</td>
-                <td>{{ entity.position }}</td>
-                <td>{{ entity.location }}</td>
-                <td>{{ entity.description }}</td>
-                <td>{{ entity.howToApply }}</td>
-                <td>{{ entity.token }}</td>
-                <td>{{ entity.isPublic }}</td>
-                <td>{{ entity.isActivated }}</td>
-                <td>{{ entity.email }}</td>
-                <td>{% if entity.expiresAt %}{{ entity.expiresAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('job_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('job_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
+    <div id="jobs">
+      <table class="jobs">
+        {% for job in jobs %}
+          <tr class="{{ cycle(['even', 'odd'], loop.index) }}">
+            <td class="location">{{ job.location }}</td>
+            <td class="position">
+              <a href="{{ path('job_show', { 'id': job.id }) }}">
+                {{ job.position }}
+              </a>
+            </td>
+            <td class="company">{{ job.company }}</td>
+          </tr>
         {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('job_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+      </table>
+    </div>
+{% endblock %}
