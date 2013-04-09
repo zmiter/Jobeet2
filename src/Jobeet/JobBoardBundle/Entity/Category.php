@@ -35,6 +35,7 @@ class Category
      * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
+
     /**
      * Constructor
      */
@@ -43,11 +44,11 @@ class Category
         $this->jobs = new \Doctrine\Common\Collections\ArrayCollection();
         $this->affiliates = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,14 +64,14 @@ class Category
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -86,14 +87,14 @@ class Category
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -109,14 +110,14 @@ class Category
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -124,32 +125,32 @@ class Category
     }
 
     /**
-     * Add jobs
+     * Add job
      *
-     * @param \Jobeet\JobBoardBundle\Entity\Job $jobs
+     * @param \Jobeet\JobBoardBundle\Entity\Job $job
      * @return Category
      */
-    public function addJob(\Jobeet\JobBoardBundle\Entity\Job $jobs)
+    public function addJob(\Jobeet\JobBoardBundle\Entity\Job $job)
     {
-        $this->jobs[] = $jobs;
-    
+        $this->jobs[] = $job;
+
         return $this;
     }
 
     /**
-     * Remove jobs
+     * Remove job
      *
-     * @param \Jobeet\JobBoardBundle\Entity\Job $jobs
+     * @param \Jobeet\JobBoardBundle\Entity\Job $job
      */
-    public function removeJob(\Jobeet\JobBoardBundle\Entity\Job $jobs)
+    public function removeJob(\Jobeet\JobBoardBundle\Entity\Job $job)
     {
-        $this->jobs->removeElement($jobs);
+        $this->jobs->removeElement($job);
     }
 
     /**
      * Get jobs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getJobs()
     {
@@ -157,32 +158,32 @@ class Category
     }
 
     /**
-     * Add affiliates
+     * Add affiliate
      *
-     * @param \Jobeet\JobBoardBundle\Entity\Affiliate $affiliates
+     * @param \Jobeet\JobBoardBundle\Entity\Affiliate $affiliate
      * @return Category
      */
-    public function addAffiliate(\Jobeet\JobBoardBundle\Entity\Affiliate $affiliates)
+    public function addAffiliate(\Jobeet\JobBoardBundle\Entity\Affiliate $affiliate)
     {
-        $this->affiliates[] = $affiliates;
-    
+        $this->affiliates[] = $affiliate;
+
         return $this;
     }
 
     /**
-     * Remove affiliates
+     * Remove affiliate
      *
-     * @param \Jobeet\JobBoardBundle\Entity\Affiliate $affiliates
+     * @param \Jobeet\JobBoardBundle\Entity\Affiliate $affiliate
      */
-    public function removeAffiliate(\Jobeet\JobBoardBundle\Entity\Affiliate $affiliates)
+    public function removeAffiliate(\Jobeet\JobBoardBundle\Entity\Affiliate $affiliate)
     {
-        $this->affiliates->removeElement($affiliates);
+        $this->affiliates->removeElement($affiliate);
     }
 
     /**
      * Get affiliates
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAffiliates()
     {

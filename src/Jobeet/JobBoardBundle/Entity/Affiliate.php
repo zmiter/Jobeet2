@@ -41,6 +41,7 @@ class Affiliate
      * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
+
     /**
      * Constructor
      */
@@ -48,11 +49,11 @@ class Affiliate
     {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,14 +69,14 @@ class Affiliate
     public function setUrl($url)
     {
         $this->url = $url;
-    
+
         return $this;
     }
 
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -91,14 +92,14 @@ class Affiliate
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -114,14 +115,14 @@ class Affiliate
     public function setToken($token)
     {
         $this->token = $token;
-    
+
         return $this;
     }
 
     /**
      * Get token
      *
-     * @return string 
+     * @return string
      */
     public function getToken()
     {
@@ -137,14 +138,14 @@ class Affiliate
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
-    
+
         return $this;
     }
 
     /**
      * Get isActive
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActive()
     {
@@ -160,14 +161,14 @@ class Affiliate
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -183,14 +184,14 @@ class Affiliate
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -198,32 +199,32 @@ class Affiliate
     }
 
     /**
-     * Add categories
+     * Add category
      *
-     * @param \Jobeet\JobBoardBundle\Entity\Category $categories
+     * @param \Jobeet\JobBoardBundle\Entity\Category $category
      * @return Affiliate
      */
-    public function addCategorie(\Jobeet\JobBoardBundle\Entity\Category $categories)
+    public function addCategory(\Jobeet\JobBoardBundle\Entity\Category $category)
     {
-        $this->categories[] = $categories;
-    
+        $this->categories[] = $category;
+
         return $this;
     }
 
     /**
-     * Remove categories
+     * Remove category
      *
-     * @param \Jobeet\JobBoardBundle\Entity\Category $categories
+     * @param \Jobeet\JobBoardBundle\Entity\Category $category
      */
-    public function removeCategorie(\Jobeet\JobBoardBundle\Entity\Category $categories)
+    public function removeCategory(\Jobeet\JobBoardBundle\Entity\Category $category)
     {
-        $this->categories->removeElement($categories);
+        $this->categories->removeElement($category);
     }
 
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories()
     {
