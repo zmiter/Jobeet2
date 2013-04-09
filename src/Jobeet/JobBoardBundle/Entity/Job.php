@@ -40,7 +40,10 @@ class Job
     /** @ORM\Column */
     private $company;
 
-    /** @ORM\Column(nullable=true) */
+    /**
+     * @ORM\Column(nullable=true)
+     * @Assert\Image
+     */
     private $logoPath;
 
     /** @ORM\Column(nullable=true) */
