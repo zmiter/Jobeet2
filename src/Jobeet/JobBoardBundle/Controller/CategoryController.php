@@ -25,8 +25,13 @@ class CategoryController extends Controller
      */
     public function showAction(Category $category)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->getActiveJobsByCategory($category);
+
         return array(
-            'entity' => $category,
+            'category' => $category,
+            'jobs' => $jobs
         );
     }
 }
