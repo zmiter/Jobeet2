@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Jobeet\JobBoardBundle\Entity\JobRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Job

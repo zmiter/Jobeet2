@@ -28,11 +28,7 @@ class JobController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->createQueryBuilder('j')
-            ->where('j.expiresAt > :now')
-            ->setParameter('now', new \DateTime())
-            ->getQuery()
-            ->getResult();
+        $jobs = $em->getRepository('JobeetJobBoardBundle:Job')->getActiveJobs();
 
         return array(
             'jobs' => $jobs,
