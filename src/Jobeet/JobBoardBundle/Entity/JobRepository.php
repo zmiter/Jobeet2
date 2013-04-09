@@ -22,11 +22,12 @@ class JobRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getActiveJobsByCategory(Category $category)
+    public function getActiveJobsByCategory(Category $category, $max = 10)
     {
         return $this->getActiveJobsQueryBuilder()
             ->andWhere('j.category = :category')
             ->setParameter('category', $category)
+            ->setMaxResults($max)
             ->getQuery()
             ->getResult();
     }
