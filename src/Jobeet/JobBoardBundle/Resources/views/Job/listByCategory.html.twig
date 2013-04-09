@@ -11,3 +11,10 @@
     </tr>
   {% endfor %}
 </table>
+
+{% if count > jobs|length %}
+  <div class="more_jobs">
+    and <a href="{{ path('category_show', { 'slug': category.slug }) }}">{{ count - jobs|length }}</a>
+    more...
+  </div>
+{% endif %}
