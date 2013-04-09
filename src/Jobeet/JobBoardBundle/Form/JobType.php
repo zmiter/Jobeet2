@@ -21,11 +21,7 @@ class JobType extends AbstractType
             ->add('howToApply')
             ->add('token')
             ->add('isPublic')
-            ->add('isActivated')
             ->add('email')
-            ->add('expiresAt')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('category', null, array('property' => 'name'))
         ;
     }
