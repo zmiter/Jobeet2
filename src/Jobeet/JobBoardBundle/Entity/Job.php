@@ -69,6 +69,9 @@ class Job
     /** @ORM\Column(type="datetime") */
     private $expiresAt;
 
+    /** @var integer Number of days a job is active */
+    private $activeDays;
+
     /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
@@ -422,8 +425,31 @@ class Job
     {
         if (!$this->getExpiresAt()) {
             $now = $this->getCreatedAt() ? clone $this->getCreatedAt() : new \DateTime();
-            $this->setExpiresAt($now->modify('+30 days'));
+            $this->setExpiresAt($now->modify("+{$this->activeDays} days"));
         }
+    }
+
+    /**
+     * Set activeDays
+     *
+     * @param integer $activeDays
+     * @return Job
+     */
+    public function setActiveDays($activeDays)
+    {
+        $this->activeDays = $activeDays;
+
+        return $this;
+    }
+
+    /**
+     * Get activeDays
+     *
+     * @return integer
+     */
+    public function getActiveDays()
+    {
+        return $this->activeDays;
     }
 
     /**

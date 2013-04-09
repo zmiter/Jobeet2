@@ -5,14 +5,23 @@ namespace Jobeet\JobBoardBundle\DataFixtures\ORM;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Jobeet\JobBoardBundle\Entity\Job;
 
-class JobFixture extends AbstractFixture implements OrderedFixtureInterface
+class JobFixture extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     public function load(ObjectManager $objectManager)
     {
         // Create full-time programming job object
-        $job = new Job();
+        $job = $this->container->get('jobeet_job_board.job_factory')->get();
         $job->setCategory($this->getReference('category-programming'));
         $job->setType('full-time');
         $job->setCompany('Sensio Labs');
@@ -35,7 +44,7 @@ class JobFixture extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('job-sensio-labs', $job);
 
         // Create part-time design job
-        $job = new Job();
+        $job = $this->container->get('jobeet_job_board.job_factory')->get();
         $job->setCategory($this->getReference('category-design'));
         $job->setType('part-time');
         $job->setCompany('Extreme Sensio');
@@ -60,7 +69,7 @@ EOT
         $this->addReference('job-extreme-sensio', $job);
 
         // Create an expired job object
-        $job = new Job();
+        $job = $this->container->get('jobeet_job_board.job_factory')->get();
         $job->setCategory($this->getReference('category-programming'));
         $job->setCompany('Sensio Labs');
         $job->setPosition('Web Developer Expired');

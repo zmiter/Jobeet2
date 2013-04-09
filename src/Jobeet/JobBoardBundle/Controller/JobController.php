@@ -48,7 +48,7 @@ class JobController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new Job();
+        $entity = $this->get('jobeet_job_board.job_factory')->get();
         $form = $this->createForm(new JobType(), $entity);
         $form->bind($request);
 
@@ -75,7 +75,7 @@ class JobController extends Controller
      */
     public function newAction()
     {
-        $entity = new Job();
+        $entity = $this->get('jobeet_job_board.job_factory')->get();
         $form   = $this->createForm(new JobType(), $entity);
 
         return array(
