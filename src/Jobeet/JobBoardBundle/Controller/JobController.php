@@ -122,25 +122,17 @@ class JobController extends Controller
     /**
      * Displays a form to edit an existing Job entity.
      *
-     * @Route("/{id}/edit", name="job_edit")
+     * @Route("/{token}/edit", name="job_edit")
      * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction(Job $job)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JobeetJobBoardBundle:Job')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Job entity.');
-        }
-
-        $editForm = $this->createForm(new JobType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new JobType(), $job);
+        $deleteForm = $this->createDeleteForm($job);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $job,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -149,33 +141,26 @@ class JobController extends Controller
     /**
      * Edits an existing Job entity.
      *
-     * @Route("/{id}", name="job_update")
+     * @Route("/{token}", name="job_update")
      * @Method("PUT")
      * @Template("JobeetJobBoardBundle:Job:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Job $job)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('JobeetJobBoardBundle:Job')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Job entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new JobType(), $entity);
+        $deleteForm = $this->createDeleteForm($job);
+        $editForm = $this->createForm(new JobType(), $job);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($job);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('job_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('job_edit', array('token' => $job->getToken())));
         }
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $job,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -184,23 +169,17 @@ class JobController extends Controller
     /**
      * Deletes a Job entity.
      *
-     * @Route("/{id}", name="job_delete")
+     * @Route("/{token}", name="job_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Job $job)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($job);
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('JobeetJobBoardBundle:Job')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Job entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($job);
             $em->flush();
         }
 
@@ -208,16 +187,16 @@ class JobController extends Controller
     }
 
     /**
-     * Creates a form to delete a Job entity by id.
+     * Creates a form to delete a Job entity.
      *
-     * @param mixed $id The entity id
+     * @param Job $job The entity
      *
      * @return Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Job $job)
     {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
+        return $this->createFormBuilder($job)
+            ->add('token', 'hidden')
             ->getForm()
         ;
     }
