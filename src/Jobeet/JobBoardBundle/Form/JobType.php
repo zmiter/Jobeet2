@@ -20,14 +20,20 @@ class JobType extends AbstractType
                 'required' => false
             ))
             ->add('company')
-            ->add('logoFile')
+            ->add('logoFile', null, array(
+                'label' => 'Company logo'
+            ))
             ->add('url')
             ->add('position')
             ->add('location')
             ->add('description')
-            ->add('howToApply')
+            ->add('howToApply', null, array(
+                'label' => 'How to apply?'
+            ))
             ->add('token')
-            ->add('isPublic')
+            ->add('isPublic', null, array(
+                'label' => 'Public?'
+            ))
             ->add('email')
             ->add('category', null, array('property' => 'name'))
         ;
