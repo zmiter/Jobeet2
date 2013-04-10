@@ -30,7 +30,6 @@ class JobType extends AbstractType
             ->add('howToApply', null, array(
                 'label' => 'How to apply?'
             ))
-            ->add('token')
             ->add('isPublic', null, array(
                 'label' => 'Public?'
             ))

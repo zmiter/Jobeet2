@@ -412,6 +412,18 @@ class Job
     }
 
     /**
+     * Set token default value
+     *
+     * @ORM\PrePersist
+     */
+    public function setDefaultToken()
+    {
+        if (!$this->getToken()) {
+            $this->setToken(sha1($this->getEmail().rand(11111, 99999)));
+        }
+    }
+
+    /**
      * Set isPublic
      *
      * @param boolean $isPublic
