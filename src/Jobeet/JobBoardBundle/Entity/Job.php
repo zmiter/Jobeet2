@@ -528,6 +528,21 @@ class Job
         }
     }
 
+    public function isExpired()
+    {
+        return $this->getDaysBeforeExpires() < 0;
+    }
+
+    public function expiresSoon()
+    {
+        return $this->getDaysBeforeExpires() < 5;
+    }
+
+    public function getDaysBeforeExpires()
+    {
+        return (new \DateTime())->diff($this->getExpiresAt())->format('%r%d');
+    }
+
     /**
      * Set activeDays
      *

@@ -77,7 +77,7 @@ class JobController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('job_show', array('slug' => $entity->getSlug())));
+            return $this->redirect($this->generateUrl('job_preview', array('token' => $entity->getToken())));
         }
 
         return array(
@@ -116,6 +116,23 @@ class JobController extends Controller
     {
         return array(
             'job' => $job
+        );
+    }
+
+    /**
+     * Finds and displays a Job entity with admin bar.
+     *
+     * @Route("/{token}/preview", name="job_preview")
+     * @Method("GET")
+     * @Template()
+     */
+    public function previewAction(Job $job)
+    {
+        $deleteForm = $this->createDeleteForm($job);
+
+        return array(
+            'job' => $job,
+            'delete_form' => $deleteForm->createView()
         );
     }
 

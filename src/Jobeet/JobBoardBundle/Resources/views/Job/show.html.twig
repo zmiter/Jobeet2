@@ -8,6 +8,8 @@
 {% endblock %}
 
 {% block body -%}
+    {% block admin %}{% endblock %}
+
     <div id="job">
       <h1>{{ job.company }}</h1>
       <h2>{{ job.location }}</h2>
@@ -35,12 +37,6 @@
 
       <div class="meta">
         <small>posted on {{ job.createdAt|date('m/d/Y') }}</small>
-      </div>
-
-      <div style="padding: 20px 0">
-        <a href="{{ path('job_edit', { 'token': job.token }) }}">
-          Edit
-        </a>
       </div>
     </div>
 {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'JobeetJobBoardBundle:Job:show.html.twig' %}
+
+{% block admin %}
+    <div id="job_actions">
+      <h3>Admin</h3>
+      <ul>
+        {% if not job.isActivated %}
+          <li><a href="{{ path('job_edit', { 'token': job.token }) }}">Edit</a></li>
+          <li><a href="">Publish</a></li>
+        {% endif %}
+
+        <li>
+          <form action="{{ path('job_delete', { 'token': job.token }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+
+        {% if job.isActivated %}
+          <li{% if job.expiresSoon %} class="expires_soon"{% endif %}>
+            {% if job.expired %}
+              Expired
+            {% else %}
+              Expires in <strong>{{ job.daysBeforeExpires }}</strong> days
+            {% endif %}
+
+            {% if job.expiresSoon %}
+              - <a href="">Extend</a> for another {{ job.activeDays }} days
+            {% endif %}
+          </li>
+        {% else %}
+          <li>
+            [Bookmark this <a href="{{ path('job_preview', { 'token': job.token }) }}">URL</a> to manage this job in the future.]
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+{% endblock %}
