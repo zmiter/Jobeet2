@@ -12,6 +12,7 @@ class JobRepository extends EntityRepository
         return $this->createQueryBuilder('j')
             ->where('j.expiresAt > :now')
             ->setParameter('now', new \DateTime())
+            ->andWhere('j.isActivated = true')
             ->orderBy('j.expiresAt', 'DESC');
     }
 
