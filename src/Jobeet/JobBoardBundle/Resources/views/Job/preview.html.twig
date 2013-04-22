@@ -6,7 +6,13 @@
       <ul>
         {% if not job.isActivated %}
           <li><a href="{{ path('job_edit', { 'token': job.token }) }}">Edit</a></li>
-          <li><a href="">Publish</a></li>
+          <li>
+            <form action="{{ path('job_publish', { 'token': job.token }) }}" method="post">
+              <input type="hidden" name="_method" value="PUT" />
+              {{ form_widget(publish_form) }}
+              <button type="submit">Publish</button>
+            </form>
+          </li>
         {% endif %}
 
         <li>

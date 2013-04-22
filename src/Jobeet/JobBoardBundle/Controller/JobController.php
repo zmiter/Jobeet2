@@ -129,11 +129,34 @@ class JobController extends Controller
     public function previewAction(Job $job)
     {
         $deleteForm = $this->createDeleteForm($job);
+        $publishForm = $this->createPublishForm($job);
 
         return array(
             'job' => $job,
-            'delete_form' => $deleteForm->createView()
+            'delete_form' => $deleteForm->createView(),
+            'publish_form' => $publishForm->createView()
         );
+    }
+
+    /**
+     * Publishes an existing Job entity.
+     *
+     * @Route("/{token}/publish", name="job_publish")
+     * @Method("PUT")
+     */
+    public function publishAction(Request $request, Job $job)
+    {
+        $form = $this->createPublishForm($job);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $job->setIsActivated(true);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('job_show', array('slug' => $job->getSlug())));
     }
 
     /**
@@ -216,5 +239,19 @@ class JobController extends Controller
             ->add('token', 'hidden')
             ->getForm()
         ;
+    }
+
+    /**
+     * Creates a form to publish a Job entity.
+     *
+     * @param Job $job The Job entity
+     *
+     * @return Symfony\Component\Form\Form The form
+     */
+    private function createPublishForm(Job $job)
+    {
+        return $this->createFormBuilder($job)
+            ->add('token', 'hidden')
+            ->getForm();
     }
 }
