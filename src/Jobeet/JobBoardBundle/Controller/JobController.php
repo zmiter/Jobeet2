@@ -168,6 +168,10 @@ class JobController extends Controller
      */
     public function editAction(Job $job)
     {
+        if ($job->getIsActivated()) {
+            throw $this->createNotFoundException('When a job is published, you cannot edit it anymore.');
+        }
+
         $editForm = $this->createForm(new JobType(), $job);
         $deleteForm = $this->createDeleteForm($job);
 
@@ -187,6 +191,10 @@ class JobController extends Controller
      */
     public function updateAction(Request $request, Job $job)
     {
+        if ($job->getIsActivated()) {
+            throw $this->createNotFoundException('When a job is published, you cannot edit it anymore.');
+        }
+
         $deleteForm = $this->createDeleteForm($job);
         $editForm = $this->createForm(new JobType(), $job);
         $editForm->bind($request);
