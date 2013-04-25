@@ -130,11 +130,13 @@ class JobController extends Controller
     {
         $deleteForm = $this->createDeleteForm($job);
         $publishForm = $this->createPublishForm($job);
+        $extendForm = $this->createExtendForm($job);
 
         return array(
             'job' => $job,
             'delete_form' => $deleteForm->createView(),
-            'publish_form' => $publishForm->createView()
+            'publish_form' => $publishForm->createView(),
+            'extend_form' => $extendForm->createView()
         );
     }
 
@@ -154,6 +156,29 @@ class JobController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('job_show', array('slug' => $job->getSlug())));
+    }
+
+    /**
+     * Extends an existing Job entity.
+     *
+     * @Route("/{token}/extend", name="job_extend")
+     * @Method("PUT")
+     */
+    public function extendAction(Request $request, Job $job)
+    {
+        $form = $this->createExtendForm($job);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            if ($job->extend()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+            } else {
+                throw $this->createNotFoundException('You can extend the job only when it is expiring in less than five days.');
+            }
         }
 
         return $this->redirect($this->generateUrl('job_show', array('slug' => $job->getSlug())));
@@ -257,6 +282,20 @@ class JobController extends Controller
      * @return Symfony\Component\Form\Form The form
      */
     private function createPublishForm(Job $job)
+    {
+        return $this->createFormBuilder($job)
+            ->add('token', 'hidden')
+            ->getForm();
+    }
+
+    /**
+     * Creates a form to extend a Job entity.
+     *
+     * @param Job $job The Job entity
+     *
+     * @return Symfony\Component\Form\Form The form
+     */
+    private function createExtendForm(Job $job)
     {
         return $this->createFormBuilder($job)
             ->add('token', 'hidden')

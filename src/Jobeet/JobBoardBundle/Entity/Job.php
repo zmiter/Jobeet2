@@ -543,6 +543,17 @@ class Job
         return (new \DateTime())->diff($this->getExpiresAt())->format('%r%d');
     }
 
+    public function extend()
+    {
+        if ($this->expiresSoon()) {
+            $this->setExpiresAt(new \DateTime("+{$this->activeDays} days"));
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Set activeDays
      *
