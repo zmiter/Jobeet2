@@ -11,6 +11,7 @@
     <services>
         <service id="jobeet_job_board.job_factory" class="Jobeet\JobBoardBundle\Factory\JobFactory">
             <argument>%jobeet_job_board.active_days%</argument>
+            <tag name="doctrine.event_listener" event="postLoad" />
         </service>
     </services>
 </container>

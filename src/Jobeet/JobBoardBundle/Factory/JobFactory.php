@@ -3,6 +3,7 @@
 namespace Jobeet\JobBoardBundle\Factory;
 
 use Jobeet\JobBoardBundle\Entity\Job;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 class JobFactory
 {
@@ -16,8 +17,22 @@ class JobFactory
     public function get()
     {
         $job = new Job();
-        $job->setActiveDays($this->activeDays);
+        $this->configure($job);
 
         return $job;
+    }
+
+    public function configure(Job $job)
+    {
+        $job->setActiveDays($this->activeDays);
+    }
+
+    public function postLoad(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if ($entity instanceof Job) {
+            $this->configure($entity);
+        }
     }
 }
