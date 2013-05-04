@@ -54,4 +54,15 @@ class JobRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function cleanUp($days)
+    {
+        return $this->createQueryBuilder('j')
+            ->delete()
+            ->where('j.isActivated = false')
+            ->andWhere('j.createdAt < :staleAt')
+            ->setParameter('staleAt', new \DateTime("-{$days} days"))
+            ->getQuery()
+            ->execute();
+    }
 }
