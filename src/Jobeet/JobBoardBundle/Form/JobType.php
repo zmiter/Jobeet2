@@ -20,7 +20,7 @@ class JobType extends AbstractType
                 'required' => false
             ))
             ->add('company')
-            ->add('logoPath')
+            ->add('logoFile')
             ->add('url')
             ->add('position')
             ->add('location')

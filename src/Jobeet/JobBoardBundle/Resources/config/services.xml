@@ -8,11 +8,13 @@
         <parameter key="jobeet_job_board.active_days">30</parameter>
         <parameter key="jobeet_job_board.max_jobs_on_homepage">10</parameter>
         <parameter key="jobeet_job_board.max_jobs_on_category">20</parameter>
+        <parameter key="jobeet_job_board.job_upload_dir">%kernel.root_dir%/../web/bundles/jobeetjobboard/uploads/jobs</parameter>
     </parameters>
 
     <services>
         <service id="jobeet_job_board.job_factory" class="Jobeet\JobBoardBundle\Factory\JobFactory">
             <argument>%jobeet_job_board.active_days%</argument>
+            <argument>%jobeet_job_board.job_upload_dir%</argument>
             <tag name="doctrine.event_listener" event="postLoad" />
         </service>
     </services>

@@ -8,10 +8,12 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 class JobFactory
 {
     private $activeDays;
+    private $uploadDir;
 
-    public function __construct($activeDays)
+    public function __construct($activeDays, $uploadDir)
     {
         $this->activeDays = $activeDays;
+        $this->uploadDir = $uploadDir;
     }
 
     public function get()
@@ -25,6 +27,7 @@ class JobFactory
     public function configure(Job $job)
     {
         $job->setActiveDays($this->activeDays);
+        $job->setUploadDir($this->uploadDir);
     }
 
     public function postLoad(LifecycleEventArgs $args)

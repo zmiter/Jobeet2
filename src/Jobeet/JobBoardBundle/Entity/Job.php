@@ -5,6 +5,7 @@ namespace Jobeet\JobBoardBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="Jobeet\JobBoardBundle\Entity\JobRepository")
@@ -40,11 +41,14 @@ class Job
     /** @ORM\Column */
     private $company;
 
-    /**
-     * @ORM\Column(nullable=true)
-     * @Assert\Image
-     */
+    /** @ORM\Column(nullable=true) */
     private $logoPath;
+
+    /** @Assert\Image */
+    private $logoFile;
+
+    /** @var string The absolute directory path where uploaded logos should be saved */
+    private $uploadDir;
 
     /** @ORM\Column(nullable=true) */
     private $url;
@@ -194,6 +198,79 @@ class Job
     public function getLogoPath()
     {
         return $this->logoPath;
+    }
+
+    /**
+     * Set uploaded logo file
+     *
+     * @param UploadedFile $logoFile
+     * @return Job
+     */
+    public function setLogoFile(UploadedFile $logoFile)
+    {
+        $this->logoFile = $logoFile;
+
+        return $this;
+    }
+
+    /**
+     * Get uploaded logo file
+     *
+     * @return UploadedFile
+     */
+    public function getLogoFile()
+    {
+        return $this->logoFile;
+    }
+
+    /**
+     * Set logo path from an uploaded logo file
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setLogoPathFromFile()
+    {
+        if ($file = $this->getLogoFile()) {
+            $uniqueFilename = uniqid(mt_rand(), true);
+            $this->setLogoPath($uniqueFilename.'.'.$file->guessExtension());
+        }
+    }
+
+    /**
+     * Move uploaded logo file to a permanent location
+     *
+     * @ORM\PostPersist
+     * @ORM\PostUpdate
+     */
+    public function moveLogoFile()
+    {
+        if ($file = $this->getLogoFile()) {
+            $file->move($this->uploadDir, $this->getLogoPath());
+        }
+    }
+
+    /**
+     * Set uploadDir
+     *
+     * @param string $uploadDir
+     * @return Job
+     */
+    public function setUploadDir($uploadDir)
+    {
+        $this->uploadDir = $uploadDir;
+
+        return $this;
+    }
+
+    /**
+     * Get uploadDir
+     *
+     * @return string
+     */
+    public function getUploadDir()
+    {
+        return $this->uploadDir;
     }
 
     /**
